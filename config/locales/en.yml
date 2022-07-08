@@ -4,11 +4,11 @@
 #
 # To use the locales, use `I18n.t`:
 #
-#     I18n.t "hello"
+#     I18n.t 'hello'
 #
 # In views, this is aliased to just `t`:
 #
-#     <%= t("hello") %>
+#     <%= t('hello') %>
 #
 # To use a different locale, set it with `I18n.locale`:
 #
@@ -24,10 +24,30 @@
 # Instead, surround them with single quotes.
 #
 # en:
-#   "true": "foo"
+#   'true': 'foo'
 #
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  messages:
+    resend_confirm_email: "An email is on its way with instructions to confirm your account."
+    reset_password_email_sent: "An email is on its way with instructions to reset your password."
+    email_reset_success: "Your password has been changed successfully."
+
+  errors:
+    models:
+      user:
+        format_email: "is not valid. Please provide valid email to continue."
+        format_password: "is not valid. Password must be 8 to 72 characters long."
+
+    controllers:
+      insufficient_params: "All required parameters are not provided to perform this action."
+      auth:
+        token_not_created: "There was some error creating auth token. Please try again."
+        unauthenticated: "You need to be signed into app to perform this action."
+        invalid_credentials: "Email/Password is not correct. Please try again."
+        password_mismatch: "Password and Confirm Password don't match. Please try again."
+      verifications:
+        late: "This token is expired. Please try again later."
+        invalid_token: "This token is invalid. Please try again."
