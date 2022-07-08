@@ -1,4 +1,5 @@
 class Auth::RegistrationsController < ApplicationController
+  before_action :authenticate_user, only: :destroy
   include CreateSession
 
   def create
@@ -30,6 +31,15 @@ class Auth::RegistrationsController < ApplicationController
 
   def error_user_save
     render status: :unprocessable_entity, json: { errors: @user.errors.full_messages }
+  end
+
+  def destroy
+    current_user.destroy
+    success_user_destroy
+  end
+
+  def success_user_destroy
+    render status: :no_content, json: {}
   end
 
   private
