@@ -1,159 +1,242 @@
-# README
+# Backend-authentication-template
 
-created by @[sulmanweb](https://sulmanweb.com)
+<div id="top"></div>
+<!-- PROJECT LOGO -->
+<div align="center">
+ 
 
-### Built With
+  <h1 align="center">Booking</h1>
 
-- Docker
-- Ruby 2.7.3
-- Postgresql
----
+  <p align="center">
+    Booking web app
+    <br />
 
-## How To Run
 
-1. Install [Docker](https://www.docker.com/)
+<!-- TABLE OF CONTENTS -->
+<details>
+<summary align="center">Table of Contents</summary>
 
-2. In terminal run
+- [booking](#booking)
+  - 
+  - [Screenshots](#screenshots)
+  - [Description 🏗️](#description-️)
+  - [Live Demo](#live-demo)
+  - [Getting Started 🏁](#getting-started-)
+    - [Prerequisites and Dependencies 📜](#prerequisites-and-dependencies-)
+      - [Setting Up PostgreSQL](#setting-up-postgresql)
+    - [Clone this repository](#clone-this-repository)
+    - [Move into the cloned directory with](#move-into-the-cloned-directory-with)
+  - [Setup](#setup)
+    - [Run linter](#run-linter)
+      - [Auto-correct](#auto-correct)
+    - [Run Project](#run-project)
+  - [Run tests](#run-tests)
+    - [Roadmap](#roadmap)
+  - [Built With 🔨](#built-with-)
+  - [Authors ✍️](#authors-️)
+  - [🤝 Contributors](#-contributors)
+  - [📝 License](#-license)
+  - [Show your support 💪](#show-your-support-)
+  - [Acknowledgments](#acknowledgments)
+</details>
+
+<!-- About the project -->
+[App screenshot](https://example.com)
+
+##  Screenshots
+![Screenshot2](app/assets/images/screenshot2.png)
+![Screenshot3](app/assets/images/screenshot3.png)
+![Screenshot4](app/assets/images/screenshot4.png)
+
+## Description 🏗️
+Booking is web app for reserve display and reserve items. User can reserve item and admin can manage all, crerate, update, delete.
+
+## Techologies
+
+###  Ruby on Rails, PostgreSQL, JWT, GraphQL,
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Live Demo
+
+(In progress)
+
+## Getting Started 🏁
+
+### Prerequisites and Dependencies 📜
+
+You will be needing:
+
+- A terminal terminal
+- A code editor
+- Ruby (follow the instructions based on your OS)
+  ```bash
+  https://www.ruby-lang.org/en/documentation/installation/
+  ```
+- Rails (follow the instructions based on your OS)
     ```bash
-    docker compose up -d --build 
+    https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project-installing-rails
     ```
 
-3. After operation completes, run:
-    ```bash
-    docker compose run web rails db:create
-    ```
+- Postgresql (follow the instructions based on your OS)
+  ```bash
+  https://www.postgresql.org/download/
+  ```
 
-4. Finally run:
-    ```bash
-    docker compose run web rails db:migrate
-    ```
 
-5. The app is available now at [http://localhost:3000](http://localhost:3000)
+#### Setting Up PostgreSQL
 
-6. To run the console run:
-    ```bash
-    docker compose run web rails console
-    ```
----
+- The postgres installation doesn't setup a user for you, so you'll need to follow these steps to create a user with permission to create databases. You can skip this if this is not your first time using PostgreSQL
 
-## Services
+  ```bash
+  sudo -u postgres createuser <Username> -s
+  ```
 
-**Sign Up**
+### Clone this repository
 
-`POST` [http://localhost:3000/auth/sign_up](http://localhost:3000/auth/sign_up)
-```json
-{
-    "email": "hello@hello.com",
-    "password": "abcd@1234",
-    "name": "Hello World"
-}
+```bash
+git clone https://github.com/VuDej/backend-authentication-template.git
+```
+### Move into the cloned directory with
+
+  ```bash
+  cd booking
+  ```
+
+## Setup
+
+Install gems with:
+
+  ```bash
+  bundle install
+  ```
+
+Setup the database with:
+```bash
+rails db:create
+```
+<div>OR</div>
+
+```bash
+rake db:create
 ```
 
-**Destroy Self User**
+### Run linter
 
-`DELETE` [http://localhost:3000/auth/destroy](http://localhost:3000/auth/destroy)
-
-`headers`
-
-```
-Authorization: Bearer xxxxxxxxx
-```
-Empty Body
-
-**Sign In**
-
-`POST` [http://localhost:3000/auth/sign_in](http://localhost:3000/auth/sign_in)
-```json
-{
-    "email": "hello@hello.com",
-    "password": "abcd@1234"
-}
+```bash
+rubocop .
 ```
 
-**Validate Token**
+#### Auto-correct
 
-`GET` [http://localhost:3000/auth/validate_token](http://localhost:3000/auth/validate_token)
+In auto-correct mode, RuboCop linters offenses will be automatically fixed:
 
-`headers`
-
+For rubocop:
+```bash
+rubocop -A
 ```
-Authorization: Bearer xxxxxxxxx
-```
-
-**Sign Out**
-
-`DELETE` [http://localhost:3000/auth/sign_out](http://localhost:3000/auth/sign_out)
-
-`headers`
-
-```
-Authorization: Bearer xxxxxxxxx
+ **<div>OR</div>**
+```bash
+rubocop --auto-correct-all
 ```
 
-**Confirm Email**
+### Run Project
 
-`GET` [http://localhost:3000/auth/confirm_email](http://localhost:3000/auth/confirm_email)
+Start server with:
 
-`query params`
-
+```bash
+rails s
 ```
-token: xxxxxxxxx
+<div align="center">OR</div>
+
+```bash
+rails server -p 3000
 ```
-
-**Resend Confirmation Email**
-
-`PUT` [http://localhost:3000/auth/resend_confirm_email](http://localhost:3000/auth/resend_confirm_email)
-
-`headers`
-
+This will start a server at:
+```bash
+localhost:3000
 ```
-Authorization: Bearer xxxxxxxxx
+You can paste or type it on url bar
+
+## Run tests
+
+Make sure you have installed gems with:
+
+ ```bash
+  bundle install
 ```
-Empty Body
+Then run all the tests with:
 
-**Forgot Password Request**
-
-`POST` [http://localhost:3000/auth/forgot_password_email](http://localhost:3000/auth/forgot_password_email)
-
-```json
-{
-    "email": "hello@world.com"
-}
-```
-
-**Verify Forgot Password Token Received In Email**
-
-`GET` [http://localhost:3000/auth/verify_reset_password_email](http://localhost:3000/auth/verify_reset_password_email)
-
-`query params`
-
-```
-token: xxxxxxxxx
+```bash
+rspec spec
 ```
 
-**Change Password For Logged In User**
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-`PUT` [http://localhost:3000/auth/reset_password](http://localhost:3000/auth/reset_password)
+<!-- ROADMAP -->
+### Roadmap
 
-`headers`
+- [x] Set up the repository/repositories on GitHub and use Gitflow.
+- [x] Set up Postgres for the database
+- [x] Create controllers, endpoints and models
+- [x] Use Rails to create API.
+- [x] Use React & Redux to create frontend UI.
+- [x] Create unit tests
+- [x] Create README
+  
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-```
-Authorization: Bearer xxxxxxxxx
-```
+## Built With 🔨
+<div align="center">
 
-OR `query params`
+|| Languages ||
+|-|-------------|-|
+||![Ruby](https://img.shields.io/badge/-Ruby-000000?style=flat&logo=ruby&logoColor=red)![Ruby on Rails](https://img.shields.io/badge/-Ruby_on_Rails-000000?style=flat&logo=ruby-on-rails&logoColor=blue)![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)||
 
-```
-token: xxxxxxxxx
-```
+</div>
 
-```json
-{
-    "password": "abcd@1234",
-    "confirm_password": "abcd@1234"
-}
-```
----
-## License
+<div align="center">
 
-**MIT**
+||Tools 🛠️||
+|-|-------------|-|
+||![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)  ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)   ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)  ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)||
+<p align="right">(<a href="#top">back to top</a>)</p>
+</div>
+
+## Authors ✍️
+<div align="center">
+
+| 👤 vudej  |
+|---|
+| <a target="_blank" href="https://github.com/VuDej"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="Github profile"></a>  <a target="_blank" href="https://www.linkedin.com/in/dejan-vujovic/"><img src="https://img.shields.io/badge/-LinkedIn-0077b5?style=for-the-badge&logo=LinkedIn&logoColor=white" alt="Linkedin profile"></a> <a target="_blank" href="https://twitter.com/DejanVuj"><img src="https://img.shields.io/badge/-Twitter-1DA1F2?style=for-the-badge&logo=Twitter&logoColor=white" alt="Twitter profile"></a>
+|
+
+</div>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+## 🤝 Contributors
+
+Contributions, issues, and feature requests are greatly appreciated!
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "improvements".
+
+- Fork the Project
+- Create your Feature Branch (git checkout -b feature/yourfeaturename)
+- Commit your Changes (git commit -m 'Add suggested feature')
+- Push to the Branch (git push origin feature/AmazingFeature)
+- Open a Pull Request
+
+Feel free to check the [issues page](https://github.com/VuDej/backend-authentication-template/issues).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## 📝 License
+
+This project is licensed by [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+## Show your support 💪
+Give a ⭐️ if you like this project!
+
+<p align="right">(<a href="#top">back to top</a>)</p>
