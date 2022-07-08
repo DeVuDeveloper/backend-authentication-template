@@ -3,34 +3,31 @@ module AuthenticateRequest
   require 'json_web_token'
 
   def authenticate_user
-    return if current_user
-
-    render status: :unauthorized,
-           json: { errors: [I18n.t('errors.controllers.auth.unauthenticated')] }
+    return render status: :unauthorized, json: {errors: [I18n.t('errors.controllers.auth.unauthenticated')]} unless current_user
   end
 
   def current_user
     @current_user = nil
-    return unless decoded_token
-
-    data = decoded_token
-    user = User.find_by(id: data[:user_id])
-    session = Session.search(data[:user_id], data[:token])
-    return unless user && session && !session.is_late?
-
-    session.used
-    @current_user ||= user
+    if decoded_token
+      data = decoded_token
+      user = User.find_by(id: data[:user_id])
+      session = Session.search(data[:user_id], data[:token])
+      if user && session && !session.is_late?
+        session.used
+        @current_user ||= user
+      end
+    end
   end
 
   def decoded_token
     header = request.headers['Authorization']
     header = header.split(' ').last if header
-    return unless header
-
-    begin
-      @decoded_token ||= JsonWebToken.decode(header)
-    rescue Error => e
-      render json: { errors: [e.message] }, status: :unauthorized
+    if header
+      begin
+        @decoded_token ||= JsonWebToken.decode(header)
+      rescue Error => e
+        return render json: {errors: [e.message]}, status: :unauthorized
+      end
     end
   end
 end

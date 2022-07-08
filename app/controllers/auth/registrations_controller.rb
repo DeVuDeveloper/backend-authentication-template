@@ -1,6 +1,6 @@
 class Auth::RegistrationsController < ApplicationController
-  before_action :authenticate_user, only: :destroy
   include CreateSession
+  before_action :authenticate_user, only: :destroy
 
   def create
     @user = User.new(registration_params)
@@ -9,20 +9,29 @@ class Auth::RegistrationsController < ApplicationController
       @token = jwt_session_create @user.id
       if @token
         @token = "Bearer #{@token}"
-        success_user_created
+        return success_user_created
       else
-        error_token_create
+        return error_token_create
       end
     else
       error_user_save
     end
   end
 
+  def destroy
+    current_user.destroy
+    success_user_destroy
+  end
+
   protected
 
   def success_user_created
     response.headers['Authorization'] = "Bearer #{@token}"
-    render status: :created, template: 'auth/auth'
+    render status: :created, template: "auth/auth"
+  end
+
+  def success_user_destroy
+    render status: :no_content, json: {}
   end
 
   def error_token_create
@@ -31,15 +40,6 @@ class Auth::RegistrationsController < ApplicationController
 
   def error_user_save
     render status: :unprocessable_entity, json: { errors: @user.errors.full_messages }
-  end
-
-  def destroy
-    current_user.destroy
-    success_user_destroy
-  end
-
-  def success_user_destroy
-    render status: :no_content, json: {}
   end
 
   private

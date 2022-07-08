@@ -8,7 +8,6 @@ class Auth::ConfirmationsController < ApplicationController
 
     verification = UserVerification.search(:pending, :confirm_email, params[:token])
     return error_invalid_token if verification.nil?
-
     if (verification.created_at + UserVerification::TOKEN_LIFETIME) > Time.now
       verification.user.confirm
       verification.update(status: :done)
@@ -28,18 +27,18 @@ class Auth::ConfirmationsController < ApplicationController
   protected
 
   def success_resend_confirm_email
-    render status: :ok, json: { message: I18n.t('messages.resend_confirm_email') }
+    render status: :ok, json: {message: I18n.t('messages.resend_confirm_email')}
   end
 
   def error_insufficient_params
-    render status: :unprocessable_entity, json: { errors: [I18n.t('errors.controllers.insufficient_params')] }
+    render status: :unprocessable_entity, json: {errors: [I18n.t('errors.controllers.insufficient_params')]}
   end
 
   def error_confirm_email_late
-    render status: :unauthorized, json: { errors: [I18n.t('errors.controllers.verifications.late')] }
+    render status: :unauthorized, json: {errors: [I18n.t('errors.controllers.verifications.late')]}
   end
 
   def error_invalid_token
-    render status: :unauthorized, json: { errors: [I18n.t('errors.controllers.verifications.invalid_token')] }
+    render status: :unauthorized, json: {errors: [I18n.t('errors.controllers.verifications.invalid_token')]}
   end
 end

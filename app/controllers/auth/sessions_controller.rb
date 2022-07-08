@@ -1,26 +1,25 @@
 class Auth::SessionsController < ApplicationController
   include CreateSession
 
-  before_action :authenticate_user, only: %i[validate_token destroy]
-
+  before_action :authenticate_user, only: [:validate_token, :destroy]
+  
   def create
     return error_insufficient_params unless params[:email].present? && params[:password].present?
-
     @user = User.find_by(email: params[:email])
     if @user
       if @user.authenticate(params[:password])
         @token = jwt_session_create @user.id
         if @token
           @token = "Bearer #{@token}"
-          success_session_created
+          return success_session_created
         else
-          error_token_create
+          return error_token_create
         end
       else
-        error_invalid_credentials
+        return error_invalid_credentials
       end
     else
-      error_invalid_credentials
+      return error_invalid_credentials
     end
   end
 
@@ -41,12 +40,12 @@ class Auth::SessionsController < ApplicationController
 
   def success_session_created
     response.headers['Authorization'] = "Bearer #{@token}"
-    render status: :created, template: 'auth/auth'
+    render status: :created, template: "auth/auth"
   end
 
   def success_valid_token
     response.headers['Authorization'] = "Bearer #{@token}"
-    render status: :ok, template: 'auth/auth'
+    render status: :ok, template: "auth/auth"
   end
 
   def success_session_destroy
@@ -54,14 +53,14 @@ class Auth::SessionsController < ApplicationController
   end
 
   def error_invalid_credentials
-    render status: :unauthorized, json: { errors: [I18n.t('errors.controllers.auth.invalid_credentials')] }
+    render status: :unauthorized, json: {errors: [I18n.t('errors.controllers.auth.invalid_credentials')]}
   end
 
   def error_token_create
-    render status: :unprocessable_entity, json: { errors: [I18n.t('errors.controllers.auth.token_not_created')] }
+    render status: :unprocessable_entity, json: {errors: [I18n.t('errors.controllers.auth.token_not_created')]}
   end
 
   def error_insufficient_params
-    render status: :unprocessable_entity, json: { errors: [I18n.t('errors.controllers.insufficient_params')] }
+    render status: :unprocessable_entity, json: {errors: [I18n.t('errors.controllers.insufficient_params')]}
   end
 end

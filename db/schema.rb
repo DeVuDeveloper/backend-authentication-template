@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_08_085055) do
+ActiveRecord::Schema.define(version: 2021_05_14_182639) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "last_used_at"
-    t.boolean "status"
+    t.boolean "status", default: true
     t.string "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["last_used_at"], name: "index_sessions_on_last_used_at"
     t.index ["status"], name: "index_sessions_on_status"
     t.index ["token"], name: "index_sessions_on_token", unique: true
@@ -29,11 +30,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_08_085055) do
 
   create_table "user_verifications", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "status"
+    t.string "status", default: "pending"
     t.string "token"
     t.string "verify_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["status"], name: "index_user_verifications_on_status"
     t.index ["token"], name: "index_user_verifications_on_token", unique: true
     t.index ["user_id"], name: "index_user_verifications_on_user_id"
@@ -45,8 +46,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_08_085055) do
     t.string "email"
     t.string "password_digest"
     t.datetime "email_confirmed_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["email_confirmed_at"], name: "index_users_on_email_confirmed_at"
   end
