@@ -5,7 +5,7 @@
 <div align="center">
  
 
-  <h1 align="center">Booking</h1>
+  <h1 align="center">Backend-authentication-template</h1>
 
   <p align="center">
     Booking web app
@@ -43,17 +43,14 @@
 <!-- About the project -->
 [App screenshot](https://example.com)
 
-##  Screenshots
-![Screenshot2](app/assets/images/screenshot2.png)
-![Screenshot3](app/assets/images/screenshot3.png)
-![Screenshot4](app/assets/images/screenshot4.png)
-
 ## Description 🏗️
 Booking is web app for reserve display and reserve items. User can reserve item and admin can manage all, crerate, update, delete.
+Graphql and Apollo with active storage for upload pdf document.
+All tests created.
 
 ## Techologies
 
-###  Ruby on Rails, PostgreSQL, JWT, GraphQL,
+###  Ruby on Rails, PostgreSQL, JWT, GraphQL, Apollo
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
