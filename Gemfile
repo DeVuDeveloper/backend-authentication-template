@@ -74,3 +74,5 @@ end
 gem 'rubocop', '>= 1.0', '< 2.0'
 
 gem 'bcrypt', '~> 3.1.7'
+gem 'jwt', '~> 2.4', '>= 2.4.1'
+gem 'figaro', '~> 1.2'

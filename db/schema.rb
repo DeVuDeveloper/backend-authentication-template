@@ -10,9 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_08_083640) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_08_085055) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "last_used_at"
+    t.boolean "status"
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_used_at"], name: "index_sessions_on_last_used_at"
+    t.index ["status"], name: "index_sessions_on_status"
+    t.index ["token"], name: "index_sessions_on_token", unique: true
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "user_verifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "status"
+    t.string "token"
+    t.string "verify_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_user_verifications_on_status"
+    t.index ["token"], name: "index_user_verifications_on_token", unique: true
+    t.index ["user_id"], name: "index_user_verifications_on_user_id"
+    t.index ["verify_type"], name: "index_user_verifications_on_verify_type"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -25,4 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_08_083640) do
     t.index ["email_confirmed_at"], name: "index_users_on_email_confirmed_at"
   end
 
+  add_foreign_key "sessions", "users"
+  add_foreign_key "user_verifications", "users"
 end
