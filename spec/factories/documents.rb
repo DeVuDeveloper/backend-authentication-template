@@ -1,5 +1,6 @@
+
 FactoryBot.define do
-    factory :document do
+  factory :document do
     association :user
 
     trait :with_image do
