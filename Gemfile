@@ -16,8 +16,8 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'jwt', '~> 2.2', '>= 2.2.3'
 gem 'figaro', '~> 1.2'
+gem 'jwt', '~> 2.2', '>= 2.2.3'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -29,8 +29,11 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # gem 'rack-cors'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -40,5 +43,7 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'apollo_upload_server', '~> 2.1'
+gem 'graphql'
 gem 'net-smtp'
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
